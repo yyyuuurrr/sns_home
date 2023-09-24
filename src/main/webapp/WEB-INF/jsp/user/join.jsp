@@ -12,19 +12,27 @@
 <body>
 	
 	<div id="wrap">
-		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="contents d-flex justify-content-center">
-			<div class="input-box my-5"">
-				<h4 class="text-center">회원 가입</h4>
-				<input type="text" placeholder="아이디" class="form-control mt-4" id="loginIdInput">
-				<input type="password" placeholder="비밀번호" class="form-control" id="passwordInput">
-				<input type="password" placeholder="비밀번호 확인" class="form-control mt-2" id="passwordConfirmInput">
-				<input type="text" placeholder="이름" class="form-control mt-4" id="nameInput">
-				<input type="text" placeholder="이메일" class="form-control mt-3" id="emailInput">
-				<button type="button" class="btn btn-primary btn-block mt-4" id="joinBtn">가입</button>
-			</div>
-		</section>
-		<c:import url="/WEB-INF/jsp/include/footer.jsp"/>
+		<div class="border">
+			<c:import url="/WEB-INF/jsp/include/header.jsp" />
+			<section class="contents d-flex justify-content-center">
+				<div class="input-box my-5">
+					<h4 class="text-center">회원 가입</h4>
+					<div class="d-flex  mt-3">
+						<input type="text" id="loginIdInput" class="form-control" placeholder="아이디">
+						<button type="button" class="btn btn-secondary btn-sm ml-2" id="isDuplicateBtn">중복확인</button>
+					</div>
+					<div class="text-success small d-none" id="avaliableText">사용 가능한 아이디 입니다.</div>
+					<div class="text-danger small d-none" id="duplicateText">중복된 아이디 입니다.</div>
+					
+					<input type="password" placeholder="비밀번호" class="form-control" id="passwordInput">
+					<input type="password" placeholder="비밀번호 확인" class="form-control mt-3" id="passwordConfirmInput">
+					<input type="text" placeholder="이름" class="form-control mt-3" id="nameInput">
+					<input type="text" placeholder="이메일" class="form-control mt-3" id="emailInput">
+					<button type="button" class="btn btn-primary btn-block mt-4" id="joinBtn">가입</button>
+				</div>
+			</section>
+			<c:import url="/WEB-INF/jsp/include/footer.jsp"/>
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>        
@@ -33,6 +41,20 @@
 
 	<script>
 		$(document).ready(function() {
+			// 중복확인 체크 여부
+			var isCheckDuplicate = false;
+			var isDuplicate = true;
+			
+			$("#loginIdInput").on("click", function() {
+				
+				isCheckDuplicate = false;
+				isDuplicate = true;
+				
+				$("#avaliableText").addClass("d-none");
+				$("#duplicateText").addClass("d-none");
+							
+			});
+			
 			
 			$("#joinBtn").on("click", function() {
 				let loginId = $("#loginIdInput").val();
@@ -44,6 +66,17 @@
 				
 				if(loginId == ""){
 					alert("아이디를 입력하세요");
+					return ;
+				}
+				
+				// 중복체크가 안된 경우
+				if(!isCheckDuplicate){
+					alert("아이디 중복확인");
+					return ;
+				}
+				
+				if(isDuplicate){
+					alert("중복된 아이디입니다.");
 					return ;
 				}
 				
@@ -89,10 +122,53 @@
 				
 			});
 			
+			
+			$("#isDuplicateBtn").on("click", function() {
+				let id = $("#loginIdInput").val();
+				
+				if(id == ""){
+					alert("아이디를 입력하세요");
+					return ;
+				}
+				
+						
+				$.ajax({
+					type:"get"
+					, url:"/user/duplicate-id"
+					, data:{"loginId":id}
+					, success:function(data){
+						
+						isCheckDuplicate = true;
+						
+						if(data.isDuplicate){
+							// 중복 되었다
+							$("#duplicateText").removeClass("d-none");
+							$("#avaliableText").addClass("d-none");
+							
+							isDuplicate = true;
+							
+						}else {
+							// 중복되지 않았다
+							$("#avaliableText").removeClass("d-none");
+							$("#duplicateText").addClass("d-none");
+							
+							isDuplicate = false;
+						}
+					}
+					, error:function(){
+						alert("중복확인 에러");
+					}
+					
+					
+				})
+				
+			});		
+			
 	
 		});
 	</script>
-	
+
+
 	
 </body>
 </html>

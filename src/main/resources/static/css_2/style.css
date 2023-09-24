@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+#wrap {
+	width:1200px;
+	margin:0 auto;
+}
+
+.section > .rogo {
+	width:200px;
+	height:300px;
+}
+.rogo > .rogo1 {
+	height:150px;
+	
+}
+.rogo > .menu {
+	height:550px;
+}
+
+
+footer {
+	height:100px;
+}

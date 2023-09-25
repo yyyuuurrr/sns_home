@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-			<div class="border rogo col-3">
+			<div class="border rogo col-3 bg-light">
 				<div class="align-items-end justify-content-between">
 					<div class="rogo1 d-flex ml-4 mt-3">
 						<h3>marondalgram</h3>

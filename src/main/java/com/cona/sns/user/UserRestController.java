@@ -34,15 +34,12 @@ public class UserRestController {
 		Map<String, String> resultMap = new HashMap<>();
 		
 		if(user != null) {
-			// 로그인 성공
+
 			HttpSession session = request.getSession();
-			// 세션에 로그인이 되었다 라는 정보를 저장
-			// 세션에 사용자와 관련된 정보를 저장
-			// 세션에 사용자 정보가 저장된 경우 로그인된 상태로 파악
-			session.setAttribute("userId", user.getLoginId());
-			session.setAttribute("userName", user.getName());
-			
-			
+
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userloginId", user.getLoginId());
+						
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");

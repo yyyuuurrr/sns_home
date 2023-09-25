@@ -5,18 +5,27 @@
 	margin:0 auto;
 }
 
-.section > .rogo {
-	width:200px;
-	height:300px;
-}
-.rogo > .rogo1 {
-	height:150px;
-	
-}
-.rogo > .menu {
-	height:550px;
+.contents > .main-menu {
+	width:300px;
 }
 
+
+.main-menu > .rogo {
+	width:300px;
+
+}
+.main-menu > .menu {
+	width:300px;
+
+}
+
+.contents > .main-contents {
+	width:1000px;
+}
+
+.main-contents > .post-layout{
+	width:600px;
+}
 
 footer {
 	height:100px;

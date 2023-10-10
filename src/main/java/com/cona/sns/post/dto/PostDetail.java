@@ -1,7 +1,5 @@
 package com.cona.sns.post.dto;
 
-import javax.persistence.Column;
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,6 +12,8 @@ public class PostDetail {
 	private String loginId;
 	private String content;
 	private String imagePath;
+	private int likeCount;
+	private boolean isLike;
 	
 
 	

@@ -36,8 +36,8 @@
 								<img width="100%" src="${post.imagePath }">
 							</div>
 							<div class="d-flex">
-								<i class="bi bi-heart"></i>
-								<p class="ml-3">좋아요 3개</p>
+								<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
+								<p class="ml-3">좋아요 ${post.likeCount }개</p>
 							</div>
 							<div class="d-flex">
 								<b>${post.loginId }</b>
@@ -47,13 +47,13 @@
 							
 							<!-- 댓글 내용 -->
 							<div class="mt-3">
-								<div><b>bear</b>댓글예시</div>
+								<div><b class="mr-2">bear</b>댓글예시</div>
 							</div>
 							<!-- 댓글 내용 -->
 							
 							<div class="d-flex">
-								<input type="text" class="form-control">
-								<button type="button" class="btn btn-primary">댓글</button>
+								<input type="text" class="form-control" id="commentInput${post.id }">
+								<button type="button" class="btn btn-primary comment-btn" data-post-id="${post.id }">게시</button>
 							</div>
 						</div>
 						</c:forEach>
@@ -71,7 +71,76 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+	<script>
+		$(document).ready(function() {
+			
+			$(".comment-btn").on("click", function() {
+				
+				let postId = $(this).data("post-id");		
+				let comment = $("#commentInput" + postId).val();
+				
+				alert("");
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/comment"
+					, data:{"postId":postId, "content":content}
+					, success:function(data){
+						
+						if(data.result == "success"){
+							
+							location.reload();
+						}else{
+							alert("댓글 작성 실패")
+						}
+						
+					}
+					, error:function(){
+						alert("댓글 에러")
+					}
+					
+				})
+				
+				
+			});
+			
+			
+			$(".like-icon").on("click", function() {
+				
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/like"
+					, data:{"postId":postId}
+					, success:function(data){
+						
+						if(data.result == "success"){
+							
+							location.reload();
+						}else{
+							alert("좋아요 실패");
+						}
+						
+					}
+					, error:function(){
+						alert("좋아요 에러")
+					}
+					
+					
+				});
+				
+				
+				
+			});
+					
+			
+			
+			
+		});	
 	
+	
+	</script>
 
 </body>
 </html>

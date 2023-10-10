@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cona.sns.common.FileManager;
+import com.cona.sns.like.service.LikeService;
 import com.cona.sns.post.domain.Post;
 import com.cona.sns.post.dto.PostDetail;
 import com.cona.sns.post.repository.PostRepository;
@@ -19,6 +20,9 @@ public class PostService {
 	
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private LikeService likeService;
 	
 	@Autowired
 	private UserService userService;
@@ -39,16 +43,20 @@ public class PostService {
 		List<PostDetail> postDetailList = new ArrayList<>();
 		
 		for(Post post:postList) {
-			int userId = post.getUserId();
-			
+			int userId = post.getUserId();			
 			User user = userService.getUserById(userId);
-			user.getLoginId();
-			
+			// 좋아요 개수 조회
+			int likeCount = likeService.countLike(post.getId());
+			// 
+
 			PostDetail postDetail = PostDetail.builder()
 									.id(post.getId())
 									.userId(userId)
 									.content(post.getContent())
 									.imagePath(post.getImagePath())
+									.loginId(user.getLoginId())
+									.likeCount(likeCount)
+									.isLike()
 									.build();
 			
 			postDetailList.add(postDetail);

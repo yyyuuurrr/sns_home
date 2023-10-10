@@ -29,12 +29,12 @@
 		SELECT 
 			`id`
 			, `userId`
-			, `imagePath`
 			, `content`
+			, `imagePath`
 		FROM
 			`post`
-		WHERE
-			`id` = #{id}
+		ORDER BY
+			`id` DESC;
 
 	</select>
 

@@ -28,9 +28,7 @@ public class PostController {
 	
 	@GetMapping("/post-view")
 	public String post(Model model
-			, HttpSession session) {
-		
-		int userId = (Integer)session.getAttribute("userId");
+			, HttpSession session) {	
 		
 		List<PostDetail> postList = postService.getPostList();
 		

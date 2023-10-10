@@ -7,18 +7,22 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cona.sns.post.service.PostService;
 
+@RequestMapping("/post")
 @RestController
 public class PostRestcontroller {
 	
 	
 	@Autowired
 	private PostService postService;
+	
+	
 	
 	@PostMapping("/create")
 	public Map<String, String> createPost(
@@ -28,7 +32,7 @@ public class PostRestcontroller {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int count = postService.addPost(0, content, file);
+		int count = postService.addPost(userId, content, file);
 				
 		Map<String, String> resultMap = new HashMap<>();
 		if(count == 1) {

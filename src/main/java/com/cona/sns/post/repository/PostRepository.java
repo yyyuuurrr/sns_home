@@ -1,15 +1,21 @@
 package com.cona.sns.post.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.cona.sns.post.domain.Post;
 
 @Repository
 public interface PostRepository {
 
 	public int insertPost(
-			@Param("snsUserId") int snsUserId
+			@Param("userId") int userId
 			, @Param("content") String content
 			, @Param("imagePath") String imagePath);
+	
+	public List<Post> selectPostList();
 	
 	
 }

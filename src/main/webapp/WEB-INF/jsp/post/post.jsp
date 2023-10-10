@@ -18,46 +18,50 @@
 			
 			<article class="main-contents p-4 d-flex justify-content-center">
 				<div class="post-layout my-5">
+					
 					<!-- 카드 리스트 -->
 					<div class="card-list">
+						<c:forEach var="post" items="${postList }">
 						<div class="card">
 							<div class="d-flex justify-content-between p-2">
 								<div class="d-flex">
 									<i class="bi bi-person-circle"></i>
-									<h4 class="text-bold ml-2">${userloginId }</h4>
+									<h4 class="text-bold ml-2">${post.loginId }</h4>
 								</div>
 								<i class="bi bi-three-dots"></i>
 							</div>
+							
+							
 							<div>
-								<img width="100%" src="https://cdn.pixabay.com/photo/2023/09/04/08/54/sea-lion-8232312_640.jpg">
+								<img width="100%" src="${post.imagePath }">
 							</div>
 							<div class="d-flex">
 								<i class="bi bi-heart"></i>
 								<p class="ml-3">좋아요 3개</p>
 							</div>
 							<div class="d-flex">
-								<b>${userloginId }</b>
-								<p>물개 귀여워</p>
+								<b>${post.loginId }</b>
+								<p>${post.content }</p>
 							</div>
 							<div> 댓글</div>
+							
 							<!-- 댓글 내용 -->
 							<div class="mt-3">
-								<div><b>hagulu</b> 귀엽당!!</div>
-							</div>
-							<div class="mt-3">
-								<div><b>bear</b>보러가자 물개</div>
+								<div><b>bear</b>댓글예시</div>
 							</div>
 							<!-- 댓글 내용 -->
+							
 							<div class="d-flex">
 								<input type="text" class="form-control">
 								<button type="button" class="btn btn-primary">댓글</button>
 							</div>
 						</div>
+						</c:forEach>
 					</div>
 					<!-- 카드 리스트 -->
+
 				</div>
 			</article>
-			
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"/>
 	</div>

@@ -16,12 +16,12 @@
 			<c:import url="/WEB-INF/jsp/include/head.jsp"/>
 			
 			<article class="main-contents p-4 d-flex justify-content-center">
-				<div class="post-layout my-5">
+				<div class="post-layout my-5 card">
 										
 					<div class="card-list">
 						<div>
 							<div class="d-flex justify-content-between p-2">
-								<h4 class="text-bold">${userloginId }</h4>
+								<h4 class="text-bold ml-3 mt-2">${userloginId }</h4>
 								<i class="bi bi-three-dots"></i>
 							</div>
 							<div>
@@ -52,7 +52,7 @@
 			$("#saveBtn").on("click", function() {
 				
 				let content = $("#contentInput").val();
-				let file = ("#fileInput")[0];
+				let file = $("#fileInput")[0];
 							
 				if(content == ""){
 					alert("내용을 입력하세요");
@@ -66,22 +66,30 @@
 				}
 				
 				
+				let formData = new FormData();
+				formData.append("content", content);
+				formData.append("imagefile", file.files[0]);
+				
 				$.ajax({
 					type:"post"
-					, url:"/post/post"
-					, data:{"content":content}
+					, url:"/post/create"
+					, data:formData
+					, enctype:"multipart/form-data" // 파일 업로드 필수 옵션
+					, processData:false // 파일 업로드 필수 옵션
+					, contentType:false // 파일 업로드 필수 옵션
 					, success:function(data){
 						
-						
+						if(data.result == "success"){
+							
+							location.href="/post/post-view";
+						}else {
+							alert("업로드 실패")
+						}
 						
 					}
 					, error:function(){
 						alert("업로드 오류")
 					}
-					
-					
-					
-					
 					
 					
 				})

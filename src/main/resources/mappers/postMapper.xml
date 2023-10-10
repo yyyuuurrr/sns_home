@@ -10,20 +10,33 @@
 		INSERT INTO
 			`post`
 		(
-			`snsUserId`
-			, `content
+			`userId`
+			, `content`
 			, `imagePath`
 		
 		)
 		VALUE
 		(
-			#{snsUserId}
+			#{userId}
 			, #{content}
 			, #{imagePath}
 		)
 		
 	</insert>
 	
-	
+	<select id="selectPostList" parameterType="int"
+	resultType="com.cona.sns.post.domain.Post">
+		SELECT 
+			`id`
+			, `userId`
+			, `imagePath`
+			, `content`
+		FROM
+			`post`
+		WHERE
+			`id` = #{id}
+
+	</select>
+
 
 </mapper>

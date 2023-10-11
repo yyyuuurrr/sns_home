@@ -20,12 +20,11 @@
 				<div class="post-layout my-5">
 					
 					<!-- 카드 리스트 -->
-					<div class="card-list">
+					<div class="card-list" style="font-size:20px;">
 						<c:forEach var="post" items="${postList }">
 						<div class="card">
 							<div class="d-flex justify-content-between p-2">
 								<div class="d-flex">
-									<i class="bi bi-person-circle"></i>
 									<h4 class="text-bold ml-2">${post.loginId }</h4>
 								</div>
 								<i class="bi bi-three-dots"></i>
@@ -35,19 +34,27 @@
 							<div>
 								<img width="100%" src="${post.imagePath }">
 							</div>
-							<div class="d-flex">
-								<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
-								<p class="ml-3">좋아요 ${post.likeCount }개</p>
+							<div class="d-flex mt-2">
+								<c:choose>
+									<c:when test="${post.like }">
+										<i class="bi bi-heart-fill text-danger">좋아요 ${post.likeCount }개</i>
+									</c:when>
+									<c:otherwise >									
+										<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
+									</c:otherwise>
+								</c:choose>
 							</div>
-							<div class="d-flex">
-								<b>${post.loginId }</b>
+							<div class="d-flex mt-2">
+								<b class="mr-2">${post.loginId }</b>
 								<p>${post.content }</p>
 							</div>
-							<div> 댓글</div>
+							<div class="text-secondary"> 댓글</div>
 							
 							<!-- 댓글 내용 -->
 							<div class="mt-3">
-								<div><b class="mr-2">bear</b>댓글예시</div>
+								<c:forEach var="comment" items="${post.commentList }">
+									<div><b class="mr-2">${comment.loginId }</b>${comment.comment }</div>
+								</c:forEach>
 							</div>
 							<!-- 댓글 내용 -->
 							
@@ -79,12 +86,11 @@
 				let postId = $(this).data("post-id");		
 				let comment = $("#commentInput" + postId).val();
 				
-				alert("");
 				
 				$.ajax({
 					type:"post"
 					, url:"/post/comment"
-					, data:{"postId":postId, "content":content}
+					, data:{"postId":postId, "comment":comment}
 					, success:function(data){
 						
 						if(data.result == "success"){

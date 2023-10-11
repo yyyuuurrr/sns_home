@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cona.sns.like.service.LikeService;
 
 @RestController
-@RequestMapping("/post")
 public class LikeRestController {
 	
 	@Autowired
 	private LikeService likeService;
 	
-	@PostMapping("/like")
+	@PostMapping("/post/like")
 	public Map<String, String> like(@RequestParam("postId")int postId
 			, HttpSession session) {
 		

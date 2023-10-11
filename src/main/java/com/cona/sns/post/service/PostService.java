@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cona.sns.comment.dto.CommentDetail;
+import com.cona.sns.comment.service.CommentService;
 import com.cona.sns.common.FileManager;
 import com.cona.sns.like.service.LikeService;
 import com.cona.sns.post.domain.Post;
@@ -26,8 +28,9 @@ public class PostService {
 	
 	@Autowired
 	private UserService userService;
-	private int userId;
-	
+		
+	@Autowired
+	private CommentService commentService;
 	
 	public int addPost(int userId, String content, MultipartFile file) {
 		
@@ -37,17 +40,21 @@ public class PostService {
 	}
 	
 	
-	public List<PostDetail> getPostList() {	
+	public List<PostDetail> getPostList(int loginUserId) {	
 		
 		List<Post> postList = postRepository.selectPostList();		
 		List<PostDetail> postDetailList = new ArrayList<>();
 		
 		for(Post post:postList) {
+			
 			int userId = post.getUserId();			
 			User user = userService.getUserById(userId);
 			// 좋아요 개수 조회
 			int likeCount = likeService.countLike(post.getId());
+			boolean isLike = likeService.isLike(post.getId(), loginUserId);
+			
 			// 
+			List<CommentDetail> commentList = commentService.getCommentList(post.getId());
 
 			PostDetail postDetail = PostDetail.builder()
 									.id(post.getId())
@@ -56,7 +63,8 @@ public class PostService {
 									.imagePath(post.getImagePath())
 									.loginId(user.getLoginId())
 									.likeCount(likeCount)
-									.isLike()
+									.isLike(isLike)
+									.commentList(commentList)
 									.build();
 			
 			postDetailList.add(postDetail);

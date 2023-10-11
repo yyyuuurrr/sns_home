@@ -1,5 +1,10 @@
 package com.cona.sns.post.dto;
 
+import java.util.List;
+
+import com.cona.sns.comment.domain.comment;
+import com.cona.sns.comment.dto.CommentDetail;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,6 +19,8 @@ public class PostDetail {
 	private String imagePath;
 	private int likeCount;
 	private boolean isLike;
+	private List<CommentDetail> commentList; 
+
 	
 
 	

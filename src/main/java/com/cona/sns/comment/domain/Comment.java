@@ -2,8 +2,8 @@ package com.cona.sns.comment.domain;
 
 import java.util.Date;
 
-public class Comment {
-
+public class comment {
+	
 	private int id;
 	private int userId;
 	private int postId;
@@ -48,6 +48,7 @@ public class Comment {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
 	
 	
 	

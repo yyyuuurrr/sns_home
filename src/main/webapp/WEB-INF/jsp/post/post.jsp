@@ -27,7 +27,7 @@
 								<div class="d-flex">
 									<h4 class="text-bold ml-2">${post.loginId }</h4>
 								</div>
-								<i class="bi bi-three-dots"></i>
+								<i class="bi bi-three-dots" data-toggle="modal" data-target="#moreModal"></i>
 							</div>
 							
 							
@@ -71,6 +71,21 @@
 			</article>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"/>
+		
+		
+		<!-- Modal -->
+		<div class="modal fade" id="moreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+
+		      <div class="modal-body text-center">
+		        <h4><a href="#">삭제하기</a></h4>
+		      </div>
+
+		    </div>
+		  </div>
+		</div>
+		
 	</div>
 
 
@@ -80,6 +95,39 @@
 
 	<script>
 		$(document).ready(function() {
+			
+			
+			$("#moreModal").on("click", function() {
+				
+				let postId = $(this).data("post-id");
+				
+				alert()
+				
+				$.ajax({
+					type:"delete"
+					, url:"/post/delete"
+					, data:{"postId":postId}
+					, success:function(data){
+						
+						if(data.result == 1){
+							 
+							location.href= "/post/post-view";
+						}else {
+							alert("게시글 삭제 오류");
+						}
+						
+					}
+					, error:function(){
+						alert("게시글 삭제 에러");
+					}
+					
+					
+				})
+				
+				
+				
+			});
+			
 			
 			$(".comment-btn").on("click", function() {
 				

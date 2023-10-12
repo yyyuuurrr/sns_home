@@ -38,5 +38,29 @@
 
 	</select>
 
+	<delete id="deletePost" parameterType="map">
+	
+		DELETE FROM 
+			`post`
+		WHERE
+			`id` = #{postId}
+	
+	</delete>
+	
+	<select id="selectPost" parameterType="int"
+	resultType="com.cona.sns.post.domain.Post">
+	
+		SELECT 
+			`id`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+		FROM
+			`post`
+		WHERE 
+			`id` = #{id}
+	
+	</select>
 
 </mapper>

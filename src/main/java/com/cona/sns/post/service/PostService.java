@@ -32,6 +32,21 @@ public class PostService {
 	@Autowired
 	private CommentService commentService;
 	
+	
+	
+	public int deletePost(int postId) {
+		
+		Post post = postRepository.selectPost(postId);
+		
+		FileManager.removeFile(post.getImagePath());
+		
+		return postRepository.deletePost(postId);
+		
+	}
+	
+	
+
+	
 	public int addPost(int userId, String content, MultipartFile file) {
 		
 		String imagePath = FileManager.saveFile(userId, file);

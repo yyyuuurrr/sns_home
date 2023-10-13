@@ -38,7 +38,7 @@
 
 	</select>
 
-	<delete id="deletePost" parameterType="map">
+	<delete id="deletePost" parameterType="int">
 	
 		DELETE FROM 
 			`post`
@@ -53,13 +53,12 @@
 		SELECT 
 			`id`
 			, `userId`
-			, `title`
 			, `content`
 			, `imagePath`
 		FROM
 			`post`
 		WHERE 
-			`id` = #{id}
+			`id` = #{postId}
 	
 	</select>
 

@@ -41,9 +41,13 @@
 	
 	</select>
 	
-	<select id="commentListDetail" parameterType="map">
+	<delete id="deleteCommentByPost" parameterType="int">
+		DELETE FROM 
+			`comment`
+		WHERE
+			`postId` = #{postId}
 	
-	</select>
+	</delete>
 	
 	
 </mapper>

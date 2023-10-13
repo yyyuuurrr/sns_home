@@ -19,6 +19,8 @@ public interface PostRepository {
 	
 	public int deletePost(@Param("postId") int postId);
 	
-	public int selectPost(@Param("id") int id);
+	public Post selectPost(@Param("postId") int id);
+	
+	
 	
 }

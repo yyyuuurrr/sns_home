@@ -34,11 +34,22 @@ public class PostService {
 	
 	
 	
-	public int deletePost(int postId) {
+	public int deletePost(int postId, int userId) {
 		
 		Post post = postRepository.selectPost(postId);
 		
+		if(post.getUserId() != userId) {
+			return 0;
+		}
+		
+		// 첨부된 파일 삭제
 		FileManager.removeFile(post.getImagePath());
+		
+		// 댓글 삭제
+		commentService.deleteCommentByPostId(postId);
+		
+		// 좋아요 삭제
+		likeService.deleteLikeByPostId(postId);
 		
 		return postRepository.deletePost(postId);
 		

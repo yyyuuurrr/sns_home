@@ -52,4 +52,11 @@ public class CommentService {
 		
 	}
 
+	
+	public int deleteCommentByPostId(int postId){
+		
+		return commentRepository.deleteCommentByPost(postId);
+		
+	}
+	
 }

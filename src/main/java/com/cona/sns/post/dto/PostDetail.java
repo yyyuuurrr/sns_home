@@ -2,7 +2,6 @@ package com.cona.sns.post.dto;
 
 import java.util.List;
 
-import com.cona.sns.comment.domain.comment;
 import com.cona.sns.comment.dto.CommentDetail;
 
 import lombok.Builder;

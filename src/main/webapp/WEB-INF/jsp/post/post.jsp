@@ -27,7 +27,11 @@
 								<div class="d-flex">
 									<h4 class="text-bold ml-2">${post.loginId }</h4>
 								</div>
-								<i class="bi bi-three-dots" data-toggle="modal" data-target="#moreModal"></i>
+						
+								<%-- 로그인한 사용자의 게시글에만 more-btn 노출 --%>
+								<c:if test="${post.userId eq userId }">
+								<i class="bi bi-three-dots more-btn" data-post-id="${post.id }" data-toggle="modal" data-target="#moreModal"></i>
+								</c:if>
 							</div>
 							
 							
@@ -37,12 +41,13 @@
 							<div class="d-flex mt-2">
 								<c:choose>
 									<c:when test="${post.like }">
-										<i class="bi bi-heart-fill text-danger">좋아요 ${post.likeCount }개</i>
+										<i class="bi bi-heart-fill text-danger unlike-icon" data-post-id="${post.id }"></i>
 									</c:when>
 									<c:otherwise >									
 										<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
 									</c:otherwise>
 								</c:choose>
+								좋아요 ${post.likeCount }개
 							</div>
 							<div class="d-flex mt-2">
 								<b class="mr-2">${post.loginId }</b>
@@ -79,7 +84,7 @@
 		    <div class="modal-content">
 
 		      <div class="modal-body text-center">
-		        <h4><a href="#">삭제하기</a></h4>
+		        <h4><a href="#" id="deleteBtn">삭제하기</a></h4>
 		      </div>
 
 		    </div>
@@ -96,12 +101,53 @@
 	<script>
 		$(document).ready(function() {
 			
-			
-			$("#moreModal").on("click", function() {
+			$(".unlike-icon").on("click", function() {
 				
 				let postId = $(this).data("post-id");
 				
-				alert()
+				$.ajax({
+					type:"delete"
+					, url:"/post/unlike"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success"){
+							 
+							location.reload();
+						}else {
+							alert("좋아요 취소 실패");
+						}
+						
+					}
+					, error:function(){
+						alert("좋아요 취소 에러");
+					}
+					
+					
+				})
+				
+				
+				
+				
+				
+			});
+			
+			
+			
+			$(".more-btn").on("click", function() {
+				
+				// 모달에 있는 삭제하기 링크 태그에 postId를 data 속성에 추가
+				// data-post-id
+				let postId = $(this).data("post-id");
+				
+				$("#deleteBtn").data("post-id", postId);
+								
+			});
+			
+			
+			$("#deleteBtn").on("click", function() {
+				
+				let postId = $(this).data("post-id");
+
 				
 				$.ajax({
 					type:"delete"
@@ -109,9 +155,9 @@
 					, data:{"postId":postId}
 					, success:function(data){
 						
-						if(data.result == 1){
+						if(data.result == "success"){
 							 
-							location.href= "/post/post-view";
+							location.reload();
 						}else {
 							alert("게시글 삭제 오류");
 						}
@@ -123,8 +169,7 @@
 					
 					
 				})
-				
-				
+								
 				
 			});
 			
